@@ -64,8 +64,6 @@ export default function DashboardPage() {
                 borderBottom: activeTab === tab ? '2px solid #5E6AD2' : '2px solid transparent',
                 marginBottom: '-1px',
                 background: 'none',
-                border: 'none',
-                borderBottom: activeTab === tab ? '2px solid #5E6AD2' : '2px solid transparent',
                 cursor: 'pointer',
               }}
             >
