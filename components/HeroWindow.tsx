@@ -108,8 +108,7 @@ export function HeroWindow() {
                 style={{
                   color: activeTab === tab ? '#f0f0f0' : '#7A7A7E',
                   borderBottom: activeTab === tab ? '2px solid #5E6AD2' : '2px solid transparent',
-                  marginBottom: '-1px', background: 'none', border: 'none',
-                  borderBottom: activeTab === tab ? '2px solid #5E6AD2' : '2px solid transparent',
+                  marginBottom: '-1px', background: 'none',
                   cursor: 'pointer',
                 }}
               >
