@@ -244,7 +244,7 @@ export const translations = {
 
     // Contact
     contact_title: 'İletişim',
-    contact_desc: 'Doğrudan ulaşmayı mı tercih ediyorsunuz? Birden fazla kanalda mevcuduz.',
+    contact_desc: 'Birden fazla kanaldan bize ulaşabilirsiniz.',
     contact_email_label: 'E-posta',
     contact_email_sub: '24 saatten kısa sürede yanıt veririz.',
     contact_phone_label: 'Telefon',

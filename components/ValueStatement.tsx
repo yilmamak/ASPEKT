@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useLang } from '@/lib/LangContext';
 
 const ValueStatement = () => {
-  const { t } = useLang();
-  const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const { t, lang } = useLang();
+  const [visibleCards, setVisibleCards] = useState<number[]>([0, 1, 2]); // Hep görünür
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const features = [
@@ -15,21 +15,22 @@ const ValueStatement = () => {
   ];
 
   useEffect(() => {
+    setVisibleCards([]);
     const observers: IntersectionObserver[] = [];
     cardRefs.current.forEach((ref, index) => {
       if (ref) {
         const observer = new IntersectionObserver(([entry]) => {
           if (entry.isIntersecting) {
-            setVisibleCards(prev => [...prev, index]);
+            setTimeout(() => setVisibleCards(prev => prev.includes(index) ? prev : [...prev, index]), index * 100);
             observer.unobserve(ref);
           }
-        }, { threshold: 0.2 });
+        }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
         observer.observe(ref);
         observers.push(observer);
       }
     });
     return () => observers.forEach(obs => obs.disconnect());
-  }, []);
+  }, [lang]);
 
   return (
     <section className="py-20 sm:py-24 bg-[#0A0A0A]">
@@ -38,7 +39,7 @@ const ValueStatement = () => {
           <div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#F0F0F0] leading-tight">
               {t('tagline').split('. ').map((line, i, arr) => (
-                <span key={i} className="block">{line}{i < arr.length - 1 ? '.' : ''}</span>
+                <span key={i} className="block mb-2">{line}{i < arr.length - 1 ? '.' : ''}</span>
               ))}
             </h2>
           </div>

@@ -63,7 +63,7 @@ const CTA = () => {
           </div>
 
           <div className="max-w-xl mx-auto">
-            <div className="mb-8">
+            <div className="mb-8 text-center">
               <h3 className="text-xl sm:text-3xl font-semibold text-[#F0F0F0] leading-tight mb-3">{t('cta_sub_title')}</h3>
               <p className="text-[#7A7A7E]">{t('cta_sub_desc')}</p>
             </div>

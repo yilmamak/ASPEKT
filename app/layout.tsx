@@ -11,6 +11,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Your processes. Running. Without you. — ASPEKT',
   description: 'Turn emails, invoices, and manual requests into automated workflows. Built for businesses that are done managing what should manage itself.',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

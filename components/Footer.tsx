@@ -15,8 +15,9 @@ const Footer = () => {
       <div className="max-w-[1080px] mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
           <div className="col-span-2 sm:col-span-3 lg:col-span-1">
-            <a href="/" className="inline-block text-[#F0F0F0] font-semibold text-lg tracking-tight hover-opacity">
-              ASPEKT
+            <a href="/" className="flex items-center gap-2.5 hover-opacity">
+              <img src="/favicon.svg" alt="ASPEKT" className="w-5 h-5" />
+              <span className="text-[#F0F0F0] font-semibold text-lg tracking-tight">ASPEKT</span>
             </a>
           </div>
 

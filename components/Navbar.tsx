@@ -59,8 +59,9 @@ const Navbar = () => {
     >
       <div className="max-w-[1080px] mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-14">
-          <a href="/" className="text-[#F0F0F0] font-semibold text-lg tracking-tight hover-opacity">
-            ASPEKT
+          <a href="/" className="flex items-center gap-2.5 hover-opacity">
+            <img src="/favicon.svg" alt="ASPEKT" className="w-6 h-6" />
+            <span className="text-[#F0F0F0] font-semibold text-lg tracking-tight">ASPEKT</span>
           </a>
 
           <div className="hidden md:flex items-center gap-1">

@@ -90,9 +90,9 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Hero Window — mobilde tam genişlik, scroll yok */}
-          <div className="relative w-full overflow-hidden">
-            <div className="absolute inset-0 -top-10 bg-gradient-to-b from-[#5E6AD2]/10 via-[#5E6AD2]/5 to-transparent blur-3xl pointer-events-none" />
+          {/* Hero Window */}
+          <div className="relative w-full overflow-hidden group">
+            <div className="absolute inset-0 -top-10 bg-gradient-to-b from-[#5E6AD2]/10 via-[#5E6AD2]/5 to-transparent blur-3xl pointer-events-none transition-all duration-500 group-hover:from-[#5E6AD2]/20 group-hover:via-[#5E6AD2]/10" />
             <HeroWindow />
           </div>
         </div>
