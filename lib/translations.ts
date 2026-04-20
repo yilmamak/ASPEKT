@@ -24,7 +24,7 @@ export const translations = {
     hero_cta_secondary: 'See how it works',
 
     // ValueStatement
-    tagline: 'Other firms advise. We operate.',
+    tagline: 'Other firms advise. We deliver time and cost savings.',
     vs_1_title: 'Built for results',
     vs_1_desc: 'We measure success in hours and costs saved — not features shipped.',
     vs_2_title: 'Powered by AI',
@@ -180,7 +180,7 @@ export const translations = {
     hero_cta_secondary: 'Nasıl çalışır',
 
     // ValueStatement
-    tagline: 'Diğerleri danışmanlık verir. Biz sistemi işlettiririz.',
+    tagline: 'Diğerleri danışmanlık verir. Biz zaman ve maliyet tasarrufu sağlarız.',
     vs_1_title: 'Sonuç odaklı',
     vs_1_desc: 'Başarıyı kazanılan saat ve maliyetle ölçeriz — özellik sayısıyla değil.',
     vs_2_title: 'Yapay Zeka Destekli',

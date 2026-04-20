@@ -186,9 +186,9 @@ const CTA = () => {
       {/* Contact */}
       <section id="contact" className="py-16 sm:py-20 bg-[#0A0A0A] border-t border-[#1F1F1F]">
         <div className="max-w-[1080px] mx-auto px-4 sm:px-6">
-          <div className="mb-8 sm:mb-10">
+          <div className="mb-8 sm:mb-10 text-center">
             <h2 className="text-2xl sm:text-4xl font-semibold text-[#F0F0F0] mb-3">{t('contact_title')}</h2>
-            <p className="text-[#7A7A7E] max-w-md">{t('contact_desc')}</p>
+            <p className="text-[#7A7A7E] max-w-md mx-auto">{t('contact_desc')}</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-4">
             <a href="mailto:info@aspektai.com"

@@ -5,13 +5,13 @@ import { Window } from '@/components/Window';
 import { useLang } from '@/lib/LangContext';
 
 const CHANNELS = [
-  { name: 'Email',    color: '#60a5fa', bg: 'rgba(96,165,250,0.10)',  border: 'rgba(96,165,250,0.25)'  },
-  { name: 'WhatsApp', color: '#4ade80', bg: 'rgba(74,222,128,0.10)', border: 'rgba(74,222,128,0.25)' },
-  { name: 'Slack',    color: '#e879f9', bg: 'rgba(232,121,249,0.10)', border: 'rgba(232,121,249,0.25)' },
-  { name: 'Teams',    color: '#818cf8', bg: 'rgba(129,140,248,0.10)', border: 'rgba(129,140,248,0.25)' },
-  { name: 'Telegram', color: '#38bdf8', bg: 'rgba(56,189,248,0.10)',  border: 'rgba(56,189,248,0.25)'  },
-  { name: 'Google',   color: '#fb923c', bg: 'rgba(251,146,60,0.10)',  border: 'rgba(251,146,60,0.25)'  },
-  { name: 'Any CRM',  color: '#5E6AD2', bg: 'rgba(94,106,210,0.10)', border: 'rgba(94,106,210,0.25)' },
+  { nameEN: 'Email', nameTR: 'Email',    color: '#60a5fa', bg: 'rgba(96,165,250,0.10)',  border: 'rgba(96,165,250,0.25)'  },
+  { nameEN: 'WhatsApp', nameTR: 'WhatsApp', color: '#4ade80', bg: 'rgba(74,222,128,0.10)', border: 'rgba(74,222,128,0.25)' },
+  { nameEN: 'Slack', nameTR: 'Slack',    color: '#e879f9', bg: 'rgba(232,121,249,0.10)', border: 'rgba(232,121,249,0.25)' },
+  { nameEN: 'Teams', nameTR: 'Teams',    color: '#818cf8', bg: 'rgba(129,140,248,0.10)', border: 'rgba(129,140,248,0.25)' },
+  { nameEN: 'Telegram', nameTR: 'Telegram', color: '#38bdf8', bg: 'rgba(56,189,248,0.10)',  border: 'rgba(56,189,248,0.25)'  },
+  { nameEN: 'Google', nameTR: 'Google',   color: '#fb923c', bg: 'rgba(251,146,60,0.10)',  border: 'rgba(251,146,60,0.25)'  },
+  { nameEN: 'Any CRM', nameTR: 'Herhangi CRM', color: '#5E6AD2', bg: 'rgba(94,106,210,0.10)', border: 'rgba(94,106,210,0.25)' },
 ];
 
 export function FeatureSystem() {
@@ -101,9 +101,9 @@ export function FeatureSystem() {
                 <p className="text-[9.5px] text-[#7A7A7E] uppercase tracking-wider mb-2.5">{t('system_delivers')}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {CHANNELS.map(ch => (
-                    <span key={ch.name} className="text-[11px] px-2.5 py-1 font-medium cursor-pointer hover:brightness-125 transition-all"
+                    <span key={isTR ? ch.nameTR : ch.nameEN} className="text-[11px] px-2.5 py-1 font-medium cursor-pointer hover:brightness-125 transition-all"
                       style={{ color: ch.color, background: ch.bg, border: `1px solid ${ch.border}`, borderRadius: '6px' }}>
-                      {ch.name}
+                      {isTR ? ch.nameTR : ch.nameEN}
                     </span>
                   ))}
                 </div>

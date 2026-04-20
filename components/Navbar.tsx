@@ -7,23 +7,32 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
+  const ticking = useRef(false);
   const { lang, setLang, t } = useLang();
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (currentY < 10) {
-        setVisible(true);
-        setScrolled(false);
-      } else {
-        setScrolled(true);
-        if (currentY < lastScrollY.current) {
-          setVisible(true); // yukarı scroll → göster
-        } else if (currentY > lastScrollY.current + 5) {
-          setVisible(false); // aşağı scroll → gizle
-        }
+      if (!ticking.current) {
+        requestAnimationFrame(() => {
+          const currentY = window.scrollY;
+          if (currentY < 10) {
+            setVisible(true);
+            setScrolled(false);
+          } else {
+            setScrolled(true);
+            if (currentY < lastScrollY.current - 5) {
+              // yukarı scroll → göster
+              setVisible(true);
+            } else if (currentY > lastScrollY.current + 8) {
+              // aşağı scroll → gizle
+              setVisible(false);
+            }
+          }
+          lastScrollY.current = currentY;
+          ticking.current = false;
+        });
+        ticking.current = true;
       }
-      lastScrollY.current = currentY;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -42,12 +51,10 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass-nav border-b border-[#1F1F1F]' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 ${scrolled ? 'glass-nav border-b border-[#1F1F1F]' : 'bg-transparent'}`}
       style={{
         transform: visible ? 'translateY(0)' : 'translateY(-100%)',
-        transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.2s ease',
+        transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease',
       }}
     >
       <div className="max-w-[1080px] mx-auto px-4 sm:px-6">

@@ -12,11 +12,11 @@ export function FeatureDeploy() {
   const WEEKS = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8'];
 
   const BARS = [
-    { labelEN: 'Process audit',       labelTR: 'Süreç analizi',        start: 1, span: 1, bg: 'bg-green-500/25',  border: 'border-green-500/35',  text: 'text-green-200' },
-    { labelEN: 'System design',       labelTR: 'Sistem tasarımı',      start: 2, span: 1, bg: 'bg-green-500/25',  border: 'border-green-500/35',  text: 'text-green-200' },
-    { labelEN: 'Build & test',        labelTR: 'Geliştirme & test',    start: 3, span: 2, bg: 'bg-[#5E6AD2]/35',  border: 'border-[#5E6AD2]/50',  text: 'text-white' },
-    { labelEN: 'Deploy',              labelTR: 'Kurulum',              start: 5, span: 1, bg: 'bg-[#1f1f1f]',     border: 'border-[#2a2a2a]',     text: 'text-[#a0a0a5]' },
-    { labelEN: 'Monitoring',          labelTR: 'İzleme',               start: 6, span: 3, bg: 'bg-[#141414]',     border: 'border-[#1f1f1f]',     text: 'text-[#555558]' },
+    { labelEN: 'Audit',       labelTR: 'Analiz',       start: 1, span: 1, bg: 'bg-green-500/25',  border: 'border-green-500/35',  text: 'text-green-200' },
+    { labelEN: 'Design',      labelTR: 'Tasarım',      start: 2, span: 1, bg: 'bg-green-500/25',  border: 'border-green-500/35',  text: 'text-green-200' },
+    { labelEN: 'Build & test',labelTR: 'Geliştirme',   start: 3, span: 2, bg: 'bg-[#5E6AD2]/35',  border: 'border-[#5E6AD2]/50',  text: 'text-white' },
+    { labelEN: 'Deploy',      labelTR: 'Kurulum',      start: 5, span: 1, bg: 'bg-[#1f1f1f]',     border: 'border-[#2a2a2a]',     text: 'text-[#a0a0a5]' },
+    { labelEN: 'Monitoring',  labelTR: 'İzleme',       start: 6, span: 3, bg: 'bg-[#141414]',     border: 'border-[#1f1f1f]',     text: 'text-[#555558]' },
   ];
 
   const PHASES = [
@@ -34,8 +34,8 @@ export function FeatureDeploy() {
   ];
 
   const LEGEND = [
-    { color: 'bg-green-500/50',  labelEN: 'Completed',    labelTR: 'Tamamlandı' },
-    { color: 'bg-[#5E6AD2]/60',  labelEN: 'In progress',  labelTR: 'Devam ediyor' },
+    { color: 'bg-green-500/50',  labelEN: 'Completed',   labelTR: 'Tamamlandı' },
+    { color: 'bg-[#5E6AD2]/60',  labelEN: 'In progress', labelTR: 'Devam ediyor' },
     { color: 'bg-[#1f1f1f] border border-[#2a2a2a]', labelEN: 'Pending', labelTR: 'Bekliyor' },
   ];
 
@@ -51,61 +51,61 @@ export function FeatureDeploy() {
       <div className="max-w-[1080px] mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-          {/* Window */}
+          {/* Window — gradyan eklendi */}
           <div className="relative order-2 lg:order-1 w-full overflow-hidden">
-            <div className="absolute inset-0 -top-6 bg-gradient-to-b from-[#5E6AD2]/8 to-transparent blur-3xl pointer-events-none" />
-            <Window rightSlot={<span className="text-[#7A7A7E]">{isTR ? 'Özel kapsam · 8 hafta' : 'Custom scope · 8 weeks'}</span>}>
-              <div className="flex">
-                {/* Phases sidebar */}
-                <div className="hidden sm:block w-[130px] shrink-0 bg-[#0b0b0b] border-r border-[#1f1f1f] py-3 px-2">
-                  <p className="text-[9.5px] text-[#333] uppercase tracking-wider px-2 mb-2">{isTR ? 'Aşamalar' : 'Phases'}</p>
-                  {PHASES.map(p => (
-                    <div key={p.labelEN} className={`px-2 py-1.5 text-[11px] rounded cursor-pointer transition-colors ${p.active ? 'bg-[#141414] text-[#f0f0f0]' : 'text-[#a0a0a5] hover:bg-[#1a1a1a]'}`}>
-                      {isTR ? p.labelTR : p.labelEN}
-                    </div>
-                  ))}
-                  <p className="text-[9.5px] text-[#333] uppercase tracking-wider px-2 mt-4 mb-2">{isTR ? 'Durum' : 'Status'}</p>
-                  {STATUS.map(s => (
-                    <div key={s.labelEN} className="flex justify-between px-2 py-1 hover:bg-[#1a1a1a] rounded transition-colors">
-                      <span className="text-[11px] text-[#a0a0a5]">{isTR ? s.labelTR : s.labelEN}</span>
-                      <span className={`text-[11px] font-mono ${s.color}`}>{s.value}</span>
-                    </div>
-                  ))}
-                </div>
+            <div className="absolute inset-0 -top-6 bg-gradient-to-b from-[#5E6AD2]/8 to-transparent blur-3xl pointer-events-none transition-all duration-400 group-hover:from-[#5E6AD2]/18" />
+            <div className="group">
+              <Window rightSlot={<span className="text-[#7A7A7E]">{isTR ? 'Özel kapsam' : 'Custom scope'}</span>}>
+                <div className="flex">
+                  <div className="hidden sm:block w-[130px] shrink-0 bg-[#0b0b0b] border-r border-[#1f1f1f] py-3 px-2">
+                    <p className="text-[9.5px] text-[#333] uppercase tracking-wider px-2 mb-2">{isTR ? 'Aşamalar' : 'Phases'}</p>
+                    {PHASES.map(p => (
+                      <div key={p.labelEN} className={`px-2 py-1.5 text-[11px] rounded cursor-pointer transition-colors ${p.active ? 'bg-[#141414] text-[#f0f0f0]' : 'text-[#a0a0a5] hover:bg-[#1a1a1a]'}`}>
+                        {isTR ? p.labelTR : p.labelEN}
+                      </div>
+                    ))}
+                    <p className="text-[9.5px] text-[#333] uppercase tracking-wider px-2 mt-4 mb-2">{isTR ? 'Durum' : 'Status'}</p>
+                    {STATUS.map(s => (
+                      <div key={s.labelEN} className="flex justify-between px-2 py-1 hover:bg-[#1a1a1a] rounded transition-colors">
+                        <span className="text-[11px] text-[#a0a0a5]">{isTR ? s.labelTR : s.labelEN}</span>
+                        <span className={`text-[11px] font-mono ${s.color}`}>{s.value}</span>
+                      </div>
+                    ))}
+                  </div>
 
-                {/* Gantt */}
-                <div className="flex-1 min-w-0 p-3">
-                  <div className="grid grid-cols-8 border-b border-[#1f1f1f] pb-2 mb-3">
-                    {WEEKS.map((w, i) => (
-                      <div key={w} className={`text-[9px] sm:text-[10px] text-center font-mono ${i === 2 || i === 3 ? 'text-[#5E6AD2]' : 'text-[#555558]'}`}>{w}</div>
-                    ))}
-                  </div>
-                  <div className="flex flex-col gap-2 relative">
-                    <div className="absolute top-0 bottom-0 w-px bg-[#5E6AD2]/40 pointer-events-none z-10" style={{ left: 'calc(37.5% + 1px)' }}>
-                      <div className="absolute -top-1 -left-[3px] w-1.5 h-1.5 rounded-full bg-[#5E6AD2]" />
+                  <div className="flex-1 min-w-0 p-3">
+                    <div className="grid grid-cols-8 border-b border-[#1f1f1f] pb-2 mb-3">
+                      {WEEKS.map((w, i) => (
+                        <div key={w} className={`text-[9px] sm:text-[10px] text-center font-mono ${i === 2 || i === 3 ? 'text-[#5E6AD2]' : 'text-[#555558]'}`}>{w}</div>
+                      ))}
                     </div>
-                    {BARS.map(b => (
-                      <div key={b.labelEN} className="grid grid-cols-8 h-7 items-center">
-                        <div
-                          className={`${b.bg} ${b.border} border rounded px-1 sm:px-2 flex items-center h-6 text-[9px] sm:text-[10px] ${b.text} truncate cursor-pointer`}
-                          style={{ gridColumnStart: b.start, gridColumnEnd: `span ${b.span}` }}
-                        >
-                          {isTR ? b.labelTR : b.labelEN}
+                    <div className="flex flex-col gap-2 relative">
+                      <div className="absolute top-0 bottom-0 w-px bg-[#5E6AD2]/40 pointer-events-none z-10" style={{ left: 'calc(37.5% + 1px)' }}>
+                        <div className="absolute -top-1 -left-[3px] w-1.5 h-1.5 rounded-full bg-[#5E6AD2]" />
+                      </div>
+                      {BARS.map(b => (
+                        <div key={b.labelEN} className="grid grid-cols-8 h-7 items-center">
+                          <div
+                            className={`${b.bg} ${b.border} border rounded px-2 flex items-center h-6 text-[10px] ${b.text} cursor-pointer`}
+                            style={{ gridColumnStart: b.start, gridColumnEnd: `span ${b.span}`, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                          >
+                            {isTR ? b.labelTR : b.labelEN}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-3 sm:gap-4 pt-4 mt-3 border-t border-[#1f1f1f]">
-                    {LEGEND.map(l => (
-                      <div key={l.labelEN} className="flex items-center gap-1.5">
-                        <div className={`w-2 h-2 rounded-sm ${l.color}`} />
-                        <span className="text-[9px] sm:text-[10px] text-[#7A7A7E]">{isTR ? l.labelTR : l.labelEN}</span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-3 sm:gap-4 pt-4 mt-3 border-t border-[#1f1f1f]">
+                      {LEGEND.map(l => (
+                        <div key={l.labelEN} className="flex items-center gap-1.5">
+                          <div className={`w-2 h-2 rounded-sm ${l.color}`} />
+                          <span className="text-[9px] sm:text-[10px] text-[#7A7A7E]">{isTR ? l.labelTR : l.labelEN}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Window>
+              </Window>
+            </div>
           </div>
 
           {/* Text */}
