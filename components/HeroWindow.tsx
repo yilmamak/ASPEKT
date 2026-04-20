@@ -11,7 +11,7 @@ export function HeroWindow() {
   const inboxItems = [
     { id: 1, title: t('kanban_backlog') === 'Bekleyen' ? 'KDV uyuşmazlığı — FAT-20847' : 'VAT mismatch — INV-20847', desc: t('kanban_backlog') === 'Bekleyen' ? 'Tedarikçiden gelen faturada KDV uyuşmazlığı. Ödeme öncesi inceleme gerekli.' : 'Invoice from Supplier A has a VAT discrepancy. Manual review required.', aspekt: t('kanban_backlog') === 'Bekleyen' ? 'Fatura girişi' : 'Invoice intake', time: '8 min ago', unread: true },
     { id: 2, title: t('kanban_backlog') === 'Bekleyen' ? 'Sözleşme maddeleri işaretlendi — SZ-2088' : 'Contract clauses flagged — LGL-2088', desc: t('kanban_backlog') === 'Bekleyen' ? 'Q2 tedarikçi sözleşmesinde 2 madde hukuki inceleme gerektiriyor.' : '2 clauses require legal review.', aspekt: t('kanban_backlog') === 'Bekleyen' ? 'Sözleşme inceleme' : 'Contract review', time: '1 hr ago', unread: true },
-    { id: 3, title: t('kanban_backlog') === 'Bekleyen' ? 'Müşteri adayı zenginleştirme duraklatıldı' : 'Lead enrichment paused', desc: t('kanban_backlog') === 'Bekleyen' ? 'API limiti aşıldı. Sistem 18:00\'de otomatik devam edecek.' : 'API rate limit reached. Will resume at 18:00.', aspekt: t('kanban_backlog') === 'Bekleyen' ? 'Müşteri adayı zenginleştirme' : 'Lead enrichment', time: '3 hr ago', unread: false },
+    { id: 3, title: t('kanban_backlog') === 'Bekleyen' ? 'Müşteri adayı zenginleştirme duraklatıldı' : 'Lead enrichment paused', desc: t('kanban_backlog') === 'Bekleyen' ? 'Kullanım limiti aşıldı. Sistem 18:00\'de otomatik devam edecek.' : 'Usage limit reached. Will resume automatically at 18:00.', aspekt: t('kanban_backlog') === 'Bekleyen' ? 'Müşteri adayı zenginleştirme' : 'Lead enrichment', time: '3 hr ago', unread: false },
   ];
 
   const activity = [
@@ -24,7 +24,7 @@ export function HeroWindow() {
     { value: '847',    label: t('dash_aspekts_run'), color: '#f0f0f0' },
     { value: '99.7%',  label: t('dash_uptime'),      color: '#f0f0f0' },
     { value: '3',      label: t('dash_flagged'),      color: '#fbbf24' },
-    { value: '47h',    label: t('dash_saved'),        color: '#5E6AD2' },
+    { value: t('kanban_backlog') === 'Bekleyen' ? '47 saat' : '47h', label: t('dash_saved'), color: '#5E6AD2' },
     { value: '€4,200', label: t('dash_cost_saved'),   color: '#5E6AD2' },
   ];
 

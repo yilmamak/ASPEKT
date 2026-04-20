@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { useLang } from '@/lib/LangContext';
 import { Window } from '@/components/Window';
 
-const ranges = ['Daily', 'Weekly', 'Monthly', '3M', '6M', '1Y', 'All time'] as const;
+const rangesEN = ['Daily', 'Weekly', 'Monthly', '3M', '6M', '1Y', 'All time'] as const;
+const rangesTR = ['Günlük', 'Haftalık', 'Aylık', '3A', '6A', '1Y', 'Tümü'] as const;
+const ranges = rangesEN;
 type Range = typeof ranges[number];
 
 const DATA: Record<Range, { aspekts: string; timeSaved: string; costSaved: string; errorRate: string; flagged: string; uptime: string }> = {
@@ -80,17 +82,17 @@ export function FeatureMonitor() {
             <div className="absolute inset-0 -top-6 bg-gradient-to-b from-[#5E6AD2]/8 to-transparent blur-3xl pointer-events-none" />
             <Window
               leftSlot={<span className="text-[11px] text-[#7A7A7E]">{t('dash_reports')}</span>}
-              rightSlot={<span className="text-[#7A7A7E]">Live data</span>}
+              rightSlot={<span className="text-[#7A7A7E]">{isTR ? 'Canlı veri' : 'Live data'}</span>}
             >
               <div className="p-4">
                 {/* Range selector */}
                 <div className="flex gap-px mb-5 p-0.5 w-fit"
                   style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: '7px', background: '#0c0c0c' }}>
-                  {ranges.map(r => (
+                  {rangesEN.map((r, i) => (
                     <button key={r} onClick={() => setRange(r)}
                       className="px-2.5 py-1 text-[10.5px] font-medium transition-colors"
                       style={{ borderRadius: '5px', color: range === r ? '#f0f0f0' : '#7A7A7E', background: range === r ? '#1a1a1a' : 'transparent', border: 'none', cursor: 'pointer' }}>
-                      {r}
+                      {isTR ? rangesTR[i] : r}
                     </button>
                   ))}
                 </div>
@@ -99,7 +101,7 @@ export function FeatureMonitor() {
                 <div className="mb-5 p-3" style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', background: '#0c0c0c' }}>
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[11.5px] font-medium text-[#B8B8BC]">{isTR ? 'Zaman içinde ASPEKT' : 'ASPEKTs over time'}</span>
-                    <span className="text-[10px] text-[#7A7A7E]">{range}</span>
+                    <span className="text-[10px] text-[#7A7A7E]">{isTR ? rangesTR[rangesEN.indexOf(range)] : range}</span>
                   </div>
                   <div style={{ height: '120px', position: 'relative' }}>
                     <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>

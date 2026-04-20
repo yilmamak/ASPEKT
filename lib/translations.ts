@@ -180,7 +180,7 @@ export const translations = {
     hero_cta_secondary: 'Nasıl çalışır',
 
     // ValueStatement
-    tagline: 'Diğerleri danışmanlık verir, biz icraata geçeriz.',
+    tagline: 'Diğerleri danışmanlık verir. Biz sistemi işlettiririz.',
     vs_1_title: 'Sonuç odaklı',
     vs_1_desc: 'Başarıyı kazanılan saat ve maliyetle ölçeriz — özellik sayısıyla değil.',
     vs_2_title: 'Yapay Zeka Destekli',
@@ -286,7 +286,7 @@ export const translations = {
     dash_aspekts_run: 'ASPEKT çalıştı',
     dash_uptime: 'Çalışma süresi',
     dash_flagged: 'İşaretlendi',
-    dash_saved: 'Tasarruf',
+    dash_saved: 'Zaman tasarrufu',
     dash_cost_saved: 'Maliyet tasarrufu',
     dash_activity: 'Aktivite',
     dash_running: 'Çalışıyor',
