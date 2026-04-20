@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useLang } from '@/lib/LangContext';
 import { Window } from '@/components/Window';
 
 const ranges = ['Daily', 'Weekly', 'Monthly', '3M', '6M', '1Y', 'All time'] as const;
@@ -43,6 +44,7 @@ function smoothPath(pts: [number, number][], tension = 0.28): string {
 }
 
 export function FeatureMonitor() {
+  const { t } = useLang();
   const [range, setRange] = useState<Range>('Weekly');
   const data = DATA[range];
   const pts = CHART_PTS_MAP[range];

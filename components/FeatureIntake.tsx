@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useLang } from '@/lib/LangContext';
 import { Window } from '@/components/Window';
 
 const SUB_FEATURES = [
@@ -34,6 +35,7 @@ const DONE = [
 
 export function FeatureIntake() {
   const [activeTab, setActiveTab] = useState('1.1');
+  const { t } = useLang();
 
   return (
     <section id="intake" className="py-24 bg-[#0a0a0a]">
@@ -126,6 +128,31 @@ export function FeatureIntake() {
                 </div>
               </div>
 
+              {/* Slack thread */}
+              <div className="border-t border-[#1f1f1f] bg-[#0c0c0c]/50 px-4 py-3">
+                <div className="flex items-center gap-1.5 mb-2.5">
+                  <span className="text-[11px] text-[#B8B8BC]"># ops-automation</span>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { name: 'cfo', time: '09:42', msg: 'Can we get Q2 supplier invoices reconciled by Friday?', bg: 'from-amber-500 to-orange-600', isBot: false },
+                    { name: 'aspekt', time: 'just now', msg: 'Created ASPEKT INV-2085 — running now, ETA 2h', bg: 'from-[#5E6AD2] to-[#3A4299]', isBot: true },
+                  ].map(({ name, time, msg, bg, isBot }) => (
+                    <div key={name} className="flex items-start gap-2 cursor-pointer p-1 rounded hover:bg-[#141414] transition-colors">
+                      <div className={`w-5 h-5 rounded bg-gradient-to-br ${bg} shrink-0 mt-0.5 flex items-center justify-center`}>
+                        {isBot && <span className="text-[9px] font-bold text-white">A</span>}
+                      </div>
+                      <div>
+                        <div className="flex items-baseline gap-1.5 mb-0.5">
+                          <span className="text-[11px] font-semibold text-[#f0f0f0]">{name}</span>
+                          <span className="text-[9.5px] text-[#7A7A7E]">{time}</span>
+                        </div>
+                        <p className="text-[11px] text-[#B8B8BC]">{msg}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </Window>
           </div>
         </div>
