@@ -44,66 +44,67 @@ function smoothPath(pts: [number, number][], tension = 0.28): string {
 }
 
 export function FeatureMonitor() {
-  const { t } = useLang();
   const [range, setRange] = useState<Range>('Weekly');
+  const { t } = useLang();
   const data = DATA[range];
   const pts = CHART_PTS_MAP[range];
   const linePath = smoothPath(pts);
   const areaPath = linePath + ' L 100,100 L 0,100 Z';
 
+  const isTR = t('monitor_sub_1') === 'Haftalık';
+
   const statCards = [
-    { label: 'ASPEKTs completed', value: data.aspekts, color: '#f0f0f0', highlight: false },
-    { label: 'Time saved',        value: data.timeSaved, color: '#5E6AD2', highlight: true },
-    { label: 'Cost saved',        value: data.costSaved, color: '#5E6AD2', highlight: true },
-    { label: 'Error rate',        value: data.errorRate, color: '#4ade80', highlight: false },
-    { label: 'Flagged',           value: data.flagged,   color: '#fbbf24', highlight: false },
-    { label: 'Uptime',            value: data.uptime,    color: '#f0f0f0', highlight: false },
+    { label: isTR ? 'Tamamlanan ASPEKT' : 'ASPEKTs completed', value: data.aspekts,  color: '#f0f0f0', highlight: false },
+    { label: isTR ? 'Kazanılan zaman'   : 'Time saved',        value: data.timeSaved, color: '#5E6AD2', highlight: true  },
+    { label: isTR ? 'Maliyet tasarrufu' : 'Cost saved',        value: data.costSaved, color: '#5E6AD2', highlight: true  },
+    { label: isTR ? 'Hata oranı'        : 'Error rate',        value: data.errorRate, color: '#4ade80', highlight: false },
+    { label: isTR ? 'İşaretlendi'       : 'Flagged',           value: data.flagged,   color: '#fbbf24', highlight: false },
+    { label: isTR ? 'Çalışma süresi'    : 'Uptime',            value: data.uptime,    color: '#f0f0f0', highlight: false },
   ];
 
-  return (
-    <section id="monitor" className="py-24 bg-[#0a0a0a]">
-      <div className="max-w-[1080px] mx-auto px-4 sm:px-6">
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
+  const SUB_FEATURES = [
+    { id: '4.1', label: isTR ? 'Anlık izleme' : 'Real-time tracking' },
+    { id: '4.2', label: isTR ? 'İstisna yönetimi' : 'Exception management' },
+    { id: '4.3', label: isTR ? 'Haftalık özet' : 'Weekly digest' },
+    { id: '4.4', label: isTR ? 'Maliyet analizi' : 'Cost analysis' },
+  ];
 
-          {/* Window — sol */}
+  const [activeTab, setActiveTab] = useState('4.1');
+
+  return (
+    <section id="monitor" className="py-20 sm:py-24 bg-[#0a0a0a]">
+      <div className="max-w-[1080px] mx-auto px-4 sm:px-6">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* Window */}
           <div className="relative order-2 lg:order-1">
             <div className="absolute inset-0 -top-6 bg-gradient-to-b from-[#5E6AD2]/8 to-transparent blur-3xl pointer-events-none" />
             <Window
-              leftSlot={<span className="text-[11px] text-[#7A7A7E]">Reports</span>}
+              leftSlot={<span className="text-[11px] text-[#7A7A7E]">{t('dash_reports')}</span>}
               rightSlot={<span className="text-[#7A7A7E]">Live data</span>}
             >
               <div className="p-4">
                 {/* Range selector */}
                 <div className="flex gap-px mb-5 p-0.5 w-fit"
-                  style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: '7px', background: '#0c0c0c' }}
-                >
+                  style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: '7px', background: '#0c0c0c' }}>
                   {ranges.map(r => (
                     <button key={r} onClick={() => setRange(r)}
                       className="px-2.5 py-1 text-[10.5px] font-medium transition-colors"
-                      style={{
-                        borderRadius: '5px',
-                        color: range === r ? '#f0f0f0' : '#7A7A7E',
-                        background: range === r ? '#1a1a1a' : 'transparent',
-                        border: 'none', cursor: 'pointer',
-                      }}
-                    >
+                      style={{ borderRadius: '5px', color: range === r ? '#f0f0f0' : '#7A7A7E', background: range === r ? '#1a1a1a' : 'transparent', border: 'none', cursor: 'pointer' }}>
                       {r}
                     </button>
                   ))}
                 </div>
 
-                {/* SVG Line Chart — üstte geniş */}
-                <div className="mb-5 p-3"
-                  style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', background: '#0c0c0c' }}
-                >
+                {/* Chart */}
+                <div className="mb-5 p-3" style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', background: '#0c0c0c' }}>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11.5px] font-medium text-[#B8B8BC]">ASPEKTs over time</span>
-                    <span className="text-[10px] text-[#7A7A7E]" style={{ fontFamily: 'Arial, sans-serif' }}>{range}</span>
+                    <span className="text-[11.5px] font-medium text-[#B8B8BC]">{isTR ? 'Zaman içinde ASPEKT' : 'ASPEKTs over time'}</span>
+                    <span className="text-[10px] text-[#7A7A7E]">{range}</span>
                   </div>
                   <div style={{ height: '120px', position: 'relative' }}>
                     <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
                       <defs>
-                        <linearGradient id="monGrad" x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient id="monGrad16" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="0%"   stopColor="#5E6AD2" stopOpacity="0.22"/>
                           <stop offset="100%" stopColor="#5E6AD2" stopOpacity="0"/>
                         </linearGradient>
@@ -111,30 +112,19 @@ export function FeatureMonitor() {
                       {[25, 50, 75].map(y => (
                         <line key={y} x1="0" y1={y} x2="100" y2={y} stroke="rgba(255,255,255,0.04)" strokeWidth="0.4"/>
                       ))}
-                      <path d={areaPath} fill="url(#monGrad)" style={{ transition: 'all 0.4s ease' }}/>
+                      <path d={areaPath} fill="url(#monGrad16)" style={{ transition: 'all 0.4s ease' }}/>
                       <path d={linePath} fill="none" stroke="#5E6AD2" strokeWidth="1" vectorEffect="non-scaling-stroke" style={{ transition: 'all 0.4s ease' }}/>
                     </svg>
                   </div>
-                  <div className="flex justify-between mt-1.5 text-[9.5px] text-[#555558]" style={{ fontFamily: 'Arial, sans-serif' }}>
-                    <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span>
-                  </div>
                 </div>
 
-                {/* Stat cards — altta */}
+                {/* Stat cards */}
                 <div className="grid grid-cols-3 gap-2">
                   {statCards.map(card => (
                     <div key={card.label} className="p-2.5 cursor-pointer transition-all duration-150"
-                      style={{
-                        border: card.highlight ? '1px solid rgba(94,106,210,0.2)' : '1px solid rgba(255,255,255,0.06)',
-                        background: card.highlight ? 'rgba(94,106,210,0.05)' : '#0c0c0c',
-                        borderRadius: '7px',
-                        transition: 'all 0.3s ease',
-                      }}
-                    >
-                      <div className="text-[18px] font-semibold mb-0.5" style={{ color: card.color, letterSpacing: '-0.02em', transition: 'all 0.3s ease' }}>
-                        {card.value}
-                      </div>
-                      <div className="text-[9.5px] text-[#7A7A7E]">{card.label}</div>
+                      style={{ border: card.highlight ? '1px solid rgba(94,106,210,0.2)' : '1px solid rgba(255,255,255,0.06)', background: card.highlight ? 'rgba(94,106,210,0.05)' : '#0c0c0c', borderRadius: '7px', transition: 'all 0.3s ease' }}>
+                      <div className="text-[16px] sm:text-[18px] font-semibold mb-0.5" style={{ color: card.color, letterSpacing: '-0.02em' }}>{card.value}</div>
+                      <div className="text-[9px] sm:text-[9.5px] text-[#7A7A7E] leading-tight">{card.label}</div>
                     </div>
                   ))}
                 </div>
@@ -142,20 +132,26 @@ export function FeatureMonitor() {
             </Window>
           </div>
 
-          {/* Text — sağ */}
+          {/* Text */}
           <div className="space-y-6 order-1 lg:order-2">
             <div className="flex items-center gap-2 text-sm text-[#7A7A7E]">
               <span className="text-xs font-mono text-[#5E6AD2]">4.0</span>
-              <span>Monitor</span>
+              <span>{t('monitor_label')}</span>
             </div>
-            <h2 className="text-4xl sm:text-5xl font-semibold text-[#f0f0f0] leading-tight tracking-tight">
-              Full visibility. Zero micromanagement.
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#f0f0f0] leading-tight tracking-tight">
+              {t('monitor_title')}
             </h2>
-            <p className="text-lg text-[#7A7A7E] leading-relaxed">
-              Every aspekt logged. Every exception flagged. Everything visible on your dashboard — you see it all, touch nothing.
-            </p>
+            <p className="text-base sm:text-lg text-[#7A7A7E] leading-relaxed">{t('monitor_desc')}</p>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              {SUB_FEATURES.map(f => (
+                <button key={f.id} onClick={() => setActiveTab(f.id)}
+                  className={`flex items-center gap-2 text-sm text-left transition-colors ${activeTab === f.id ? 'text-[#f0f0f0]' : 'text-[#7A7A7E] hover:text-[#f0f0f0]'}`}>
+                  <span className="text-xs font-mono text-[#7A7A7E]">{f.id}</span>
+                  {f.label}
+                </button>
+              ))}
+            </div>
           </div>
-
         </div>
       </div>
     </section>

@@ -7,7 +7,7 @@ import { useLang } from '@/lib/LangContext';
 const RequiredStar = () => <span className="text-[#5E6AD2] ml-0.5">*</span>;
 
 const CTA = () => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [mode, setMode] = useState<'form' | 'meeting' | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [calendlyOpen, setCalendlyOpen] = useState(false);
@@ -26,37 +26,34 @@ const CTA = () => {
     }
   }, [calendlyOpen]);
 
-  const handleSubmit = () => {
-    const subject = encodeURIComponent(`ASPEKT Application — ${form.company}`);
-    const body = encodeURIComponent(
-`ASPEKT — New Application
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
 
-Company: ${form.company}
-Name: ${form.name}
-Role: ${form.role}
-Email: ${form.email}
-Phone: ${form.phone || 'Not provided'}
-
----
-
-Number of manual processes: ${form.taskCount}
-Main task: ${form.taskDesc}
-Frequency: ${form.frequency}
-Consequences (optional): ${form.consequences || 'Not provided'}`
-    );
-    window.location.href = `mailto:info@aspektai.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+  const handleSubmit = async () => {
+    setSending(true);
+    setSendError(false);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, lang }),
+      });
+      if (!res.ok) throw new Error('failed');
+      setSubmitted(true);
+    } catch {
+      setSendError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const isValid = !!(form.name && form.company && form.email && form.taskCount && form.taskDesc && form.frequency);
-
   const inputClass = "w-full px-4 py-3 bg-[#141414] border border-[#2A2A2A] text-[#F0F0F0] text-sm placeholder-[#555558] focus:border-[#5E6AD2] focus:outline-none transition-colors";
   const labelClass = "block text-xs text-[#9A9A9E] mb-2";
   const hintClass = "text-xs text-[#555558] mb-2";
 
   return (
     <>
-      {/* Quote */}
       <section id="quote" className="py-20 sm:py-24 bg-[#0A0A0A] border-t border-[#1F1F1F]">
         <div className="max-w-[1080px] mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 sm:mb-16">
@@ -100,51 +97,56 @@ Consequences (optional): ${form.consequences || 'Not provided'}`
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className={labelClass}>{t('form_name')}<RequiredStar /></label>
-                    <input type="text" className={inputClass} placeholder="Jane Smith" value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
+                    <input type="text" className={inputClass} placeholder={t('ph_name')} value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
                   </div>
                   <div>
                     <label className={labelClass}>{t('form_role')}</label>
-                    <input type="text" className={inputClass} placeholder="COO" value={form.role} onChange={e => setForm({...form, role: e.target.value})} />
+                    <input type="text" className={inputClass} placeholder={t('ph_role')} value={form.role} onChange={e => setForm({...form, role: e.target.value})} />
                   </div>
                 </div>
                 <div>
                   <label className={labelClass}>{t('form_company')}<RequiredStar /></label>
-                  <input type="text" className={inputClass} placeholder="Acme Logistics" value={form.company} onChange={e => setForm({...form, company: e.target.value})} />
+                  <input type="text" className={inputClass} placeholder={t('ph_company')} value={form.company} onChange={e => setForm({...form, company: e.target.value})} />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className={labelClass}>{t('form_email')}<RequiredStar /></label>
-                    <input type="email" className={inputClass} placeholder="jane@company.com" value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
+                    <input type="email" className={inputClass} placeholder={t('ph_email')} value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
                   </div>
                   <div>
                     <label className={labelClass}>{t('form_phone')} <span className="text-[#555558]">{t('form_phone_optional')}</span></label>
-                    <input type="tel" className={inputClass} placeholder="+90 555 000 00 00" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
+                    <input type="tel" className={inputClass} placeholder={t('ph_phone')} value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
                   </div>
                 </div>
                 <div>
                   <label className={labelClass}>{t('form_task_count')}<RequiredStar /></label>
                   <p className={hintClass}>{t('form_task_count_hint')}</p>
-                  <input type="text" className={inputClass} placeholder="e.g. 3–5" value={form.taskCount} onChange={e => setForm({...form, taskCount: e.target.value})} />
+                  <input type="text" className={inputClass} placeholder={t('ph_task_count')} value={form.taskCount} onChange={e => setForm({...form, taskCount: e.target.value})} />
                 </div>
                 <div>
                   <label className={labelClass}>{t('form_task_desc')}<RequiredStar /></label>
                   <p className={hintClass}>{t('form_task_desc_hint')}</p>
-                  <textarea rows={3} className={inputClass + " resize-none"} placeholder="e.g. We manually match supplier invoices..." value={form.taskDesc} onChange={e => setForm({...form, taskDesc: e.target.value})} />
+                  <textarea rows={3} className={inputClass + " resize-none"} placeholder={t('ph_task_desc')} value={form.taskDesc} onChange={e => setForm({...form, taskDesc: e.target.value})} />
                 </div>
                 <div>
                   <label className={labelClass}>{t('form_frequency')}<RequiredStar /></label>
                   <p className={hintClass}>{t('form_frequency_hint')}</p>
-                  <textarea rows={2} className={inputClass + " resize-none"} placeholder="Daily, ~2 hours across 3 people" value={form.frequency} onChange={e => setForm({...form, frequency: e.target.value})} />
+                  <textarea rows={2} className={inputClass + " resize-none"} placeholder={t('ph_frequency')} value={form.frequency} onChange={e => setForm({...form, frequency: e.target.value})} />
                 </div>
                 <div>
                   <label className={labelClass}>{t('form_consequences')} <span className="text-[#555558]">{t('form_optional')}</span></label>
                   <p className={hintClass}>{t('form_consequences_hint')}</p>
-                  <textarea rows={2} className={inputClass + " resize-none"} placeholder="Payments get delayed..." value={form.consequences} onChange={e => setForm({...form, consequences: e.target.value})} />
+                  <textarea rows={2} className={inputClass + " resize-none"} placeholder={t('ph_consequences')} value={form.consequences} onChange={e => setForm({...form, consequences: e.target.value})} />
                 </div>
-                <button onClick={handleSubmit} disabled={!isValid}
-                  className="px-6 py-3 text-sm font-medium text-[#0A0A0A] bg-[#F0F0F0] rounded-[6px] hover:bg-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                  {t('form_submit')}
-                </button>
+                <div className="space-y-2">
+                  <button onClick={handleSubmit} disabled={!isValid || sending}
+                    className="px-6 py-3 text-sm font-medium text-[#0A0A0A] bg-[#F0F0F0] rounded-[6px] hover:bg-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2">
+                    {sending ? (
+                      <><svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0a0a0a" strokeWidth="3" strokeDasharray="30 70"/></svg>{lang === 'tr' ? 'Gönderiliyor...' : 'Sending...'}</>
+                    ) : t('form_submit')}
+                  </button>
+                  {sendError && <p className="text-xs text-red-400">{lang === 'tr' ? 'Bir hata oluştu, lütfen tekrar deneyin.' : 'Something went wrong, please try again.'}</p>}
+                </div>
               </div>
             )}
 
@@ -226,10 +228,7 @@ Consequences (optional): ${form.consequences || 'Not provided'}`
       </section>
 
       <style>{`
-        @keyframes expandDown {
-          from { opacity: 0; transform: translateY(-8px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes expandDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
     </>
   );
