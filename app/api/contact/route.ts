@@ -72,9 +72,9 @@ export async function POST(req: NextRequest) {
 </html>`;
 
     const { data, error } = await resend.emails.send({
-      from: 'ASPEKT <onboarding@resend.dev>',
+      from: 'ASPEKT <info@aspektai.com>',
       to: ['info@aspektai.com'],
-      replyTo: email,
+      replyTo: email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : undefined,
       subject: `${isTR ? 'Yeni Başvuru' : 'New Application'} — ${company}`,
       html: emailHtml,
     });

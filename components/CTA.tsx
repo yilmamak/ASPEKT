@@ -112,6 +112,7 @@ const CTA = () => {
                   <div>
                     <label className={labelClass}>{t('form_email')}<RequiredStar /></label>
                     <input type="email" className={inputClass} placeholder={t('ph_email')} value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
+                    {form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email) && <p className="text-[10px] text-red-400 mt-1">{lang === 'tr' ? 'Geçerli bir e-posta adresi girin' : 'Please enter a valid email address'}</p>}
                   </div>
                   <div>
                     <label className={labelClass}>{t('form_phone')} <span className="text-[#555558]">{t('form_phone_optional')}</span></label>
@@ -145,7 +146,7 @@ const CTA = () => {
                       <><svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0a0a0a" strokeWidth="3" strokeDasharray="30 70"/></svg>{lang === 'tr' ? 'Gönderiliyor...' : 'Sending...'}</>
                     ) : t('form_submit')}
                   </button>
-                  {sendError && <p className="text-xs text-red-400">{lang === 'tr' ? 'Bir hata oluştu, lütfen tekrar deneyin.' : 'Something went wrong, please try again.'}</p>}
+                  {sendError && <p className="text-xs text-red-400">{lang === 'tr' ? 'Gönderilemedi. E-posta adresinizi kontrol edip tekrar deneyin.' : 'Could not send. Please check your email address and try again.'}</p>}
                 </div>
               </div>
             )}
